@@ -1,7 +1,7 @@
 import { Response } from 'express';
-import { Tool } from '../models/Tool.model';
-import { AuthRequest } from '../types';
-import { handleError, sendSuccess } from '../utils/errors';
+import { Tool } from '../models/Tool.model.js';
+import { AuthRequest } from '../types/index.js';
+import { handleError, sendSuccess } from '../utils/errors.js';
 
 export const getStats = async (req: AuthRequest, res: Response) => {
   try {

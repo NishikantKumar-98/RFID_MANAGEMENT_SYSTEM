@@ -1,9 +1,9 @@
 import { Response } from 'express';
-import { Tool } from '../models/Tool.model';
-import { Transaction } from '../models/Transaction.model';
-import { returnToolSchema } from '../validators/tool.validator';
-import { AuthRequest } from '../types';
-import { handleError, sendSuccess, ApiError } from '../utils/errors';
+import { Tool } from '../models/Tool.model.js';
+import { Transaction } from '../models/Transaction.model.js';
+import { returnToolSchema } from '../validators/tool.validator.js';
+import { AuthRequest } from '../types/index.js';
+import { handleError, sendSuccess, ApiError } from '../utils/errors.js';
 
 export const returnTool = async (req: AuthRequest, res: Response) => {
   try {

@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
-import { User } from '../models/User.model';
-import { generateToken } from '../utils/jwt.utils';
-import { handleError, sendSuccess, ApiError } from '../utils/errors';
+import { User } from '../models/User.model.js';
+import { generateToken } from '../utils/jwt.utils.js';
+import { handleError, sendSuccess, ApiError } from '../utils/errors.js';
 
 export const login = async (req: Request, res: Response) => {
   try {
