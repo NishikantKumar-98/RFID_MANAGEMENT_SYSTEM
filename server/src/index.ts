@@ -4,7 +4,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { connectDB } from './config/db';
-import { ApiError, handleError } from './utils/errors';
+import { handleError } from './utils/errors';
 
 import authRoutes from './routes/auth.routes';
 import toolRoutes from './routes/tool.routes';
@@ -19,6 +19,26 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+// Public utility routes that do not need the database.
+app.get('/', (req: Request, res: Response) => {
+  res.json({ success: true, message: 'RFID Tool Management API is running' });
+});
+
+app.get('/favicon.ico', (req: Request, res: Response) => {
+  res.status(204).end();
+});
+
+// Vercel runs this file as a serverless function, so connect before API routes
+// without starting a long-lived listener inside the function runtime.
+app.use(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -53,4 +73,8 @@ const startServer = async () => {
   }
 };
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+}
+
+export default app;
